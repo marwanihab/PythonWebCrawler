@@ -18,7 +18,7 @@ PythonWebCrawler uses:
 
 PythonWebCrawler requires [Python]  to run.
 
-Install the mentioned dependencies and devDependencies then to run just .
+Install the mentioned dependencies then to run just :
 
 ```sh
 $ cd wikiphilo
