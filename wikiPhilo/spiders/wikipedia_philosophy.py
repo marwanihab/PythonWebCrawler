@@ -28,12 +28,6 @@ class WikipediaPhilosophySpider(scrapy.Spider):
 
         print("Link visited https://en.wikipedia.org/", self.first_url)
 
-        # if self.visited_urls.has_key(parsed_url):
-        #     print("A loop is found error !!")
-        #     return
-
-        # Check if we reached the target link
-        # print("url", self.target_url)
         if self.first_url == self.target_url:
             print("Target link has been reached")
             self.loop = False
@@ -48,8 +42,6 @@ class WikipediaPhilosophySpider(scrapy.Spider):
         self.first_url = response.xpath(
             "//div[@class='mw-content-ltr']/div[@class='mw-parser-output']/p[not (@class='mw-empty-elt')]").extract_first()
 
-        # print(response.urljoin(first_url))
-        # print(self.first_url)
 
         self.first_url = self.parse_P(str(self.first_url), response)
 
@@ -58,18 +50,14 @@ class WikipediaPhilosophySpider(scrapy.Spider):
             self.loop = False
             return
 
-        # first_url = response.urljoin(first_url)
-        # start_urls.append(first_url)
         time.sleep(0.5)
         # dont_filter = True
         yield scrapy.Request(response.urljoin(self.first_url), self.parse)
 
     def parse_P(self, paragraph, response):
 
-        # print('here yarab')
-        # print(paragraph)
         if "(" not in paragraph:
-            # print("here")
+ 
             return response.xpath(
                 "//div[@class='mw-content-ltr']/div[@class='mw-parser-output']/p/a/@href").extract_first()
         else:
@@ -84,10 +72,7 @@ class WikipediaPhilosophySpider(scrapy.Spider):
             # to remove all the <a> tags with <span> styling
             proper_paragraph = re.sub(r'span.*?span', '', proper_paragraph)
 
-            # print(proper_paragraph)
-
-            # print(self.extract_proper_link(proper_paragraph)
-            #       )
+       
 
             return self.extract_proper_link(proper_paragraph)
 
